@@ -33,31 +33,47 @@ class RollSkill(MycroftSkill):
     def handle_roll_intent(self, message):
         feedback = self.feedback[randrange(len(self.feedback))]
         dice = message.data.get("Dice")
-        dice = re.findall(r'\d+', dice)
-        if len(dice) >= 2:
-            num = dice[0]
-            sides = dice[1]
-            if num == '40':
-                num = '4'
-        elif len(dice) == 1:
-            sides = '6'
-            num = dice[0]
-            if num == '46':
-                num = '4'
+        #input will be parsed for number of dice and number of sides (d#)
+        regex = r"(\d+)(?:\s?)(?:d\s?)(\d+)"
+        values = re.search(regex, dice)
+        if values:
+            num = values.group(1)
+            sides = values.group(2)
+        
+            if num == '':
+                num = '1'
+            if sides == '':
+                sides = '6'
+        
+        #dice = re.findall(r'd\d+$', dice)
+        #if len(dice) >= 2:
+        #    num = dice[0]
+        #    sides = dice[1]
+            #fix for 40-4 bug, this is an STT problem. Should not be handled on skill level.
+            #if num == '40':
+            #    num = '4'
+        #elif len(dice) == 1:
+        #    sides = '6'
+        #    num = dice[0]
+            #fix for 4-46 bug, this is an STT problem. Should not be handled on skill level.
+            #if num == '46':
+            #    num = '4'
         else:
             num = '1'
             sides = '6'
         # Your sanity will be tested when someone asks mycroft to roll 2000 dice!
-        if int(num) > 100:
-            num = 100
-        if int(sides) > 120:
-            sides = 120
-        if int(num) > 20:
-            guess_num = str(int(float(sides) / 2.0 * float(num)))
-            guess_str = self.guess[randrange(len(self.guess))]
-            guess_str = guess_str.replace('<guess>', guess_num)
-            self.speak(guess_str)
-            mycroft.audio.wait_while_speaking()
+        #if int(num) > 100:
+        #    num = 100
+        #if int(sides) > 120:
+        #    sides = 120
+        #if int(num) > 20:
+        #    guess_num = str(int(float(sides) / 2.0 * float(num)))
+        #    guess_str = self.guess[randrange(len(self.guess))]
+        #    guess_str = guess_str.replace('<guess>', guess_num)
+        #    self.speak(guess_str)
+        #    mycroft.audio.wait_while_speaking()
+        
+        #generate dicerolls
         dice_array = []
         for i in range(int(num)):
             dice_array.append(randint(1, int(sides)))

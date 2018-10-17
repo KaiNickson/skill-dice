@@ -13,10 +13,6 @@ Command syntax:
 Working features:
  - rolls dice when spoken in RPG notation
 
-## BUGS
-Skill does't recognisse the word "a".
-Asking to roll "a d20" resolves to the default 1 D6
-
 ## TODO
 
 -shorten the diceroll soundclip

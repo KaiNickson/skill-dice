@@ -34,7 +34,7 @@ class RollSkill(MycroftSkill):
         feedback = self.feedback[randrange(len(self.feedback))]
         dice = message.data.get("Dice")
         #input will be parsed for number of dice and number of sides (d#)
-        values = re.search(r'(?:(\d+)|(?:\sa\s))(?:\s?)(?:d\s?)(\d+)', dice)
+        values = re.search(r'(\d+|a)(?:\s?)(?:d\s?)(\d+)', dice)
         if values:
             num = values.group(1)
             sides = values.group(2)

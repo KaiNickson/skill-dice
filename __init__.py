@@ -39,7 +39,7 @@ class RollSkill(MycroftSkill):
             num = values.group(1)
             sides = values.group(2)
         
-            if num == '':
+            if num == '' or num == 'a':
                 num = '1'
             if sides == '':
                 sides = '6'
